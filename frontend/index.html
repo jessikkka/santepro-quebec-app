@@ -1,24 +1,48 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>SantéPro Québec</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      margin: 0;
+      text-align: center;
+    }
+    header {
+      background: #2c7be5;
+      color: white;
+      padding: 2rem;
+    }
+    main {
+      padding: 2rem;
+    }
+    .card {
+      background: white;
+      max-width: 500px;
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
 <body>
-  <h1>SantéPro Québec</h1>
-  <p>Frontend connecté au backend ✔️</p>
 
-  <script>
-    fetch("https://santepro-backend.onrender.com/")
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        document.body.insertAdjacentHTML(
-          "beforeend",
-          `<pre>${JSON.stringify(data, null, 2)}</pre>`
-        );
-      })
-      .catch(err => console.error(err));
-  </script>
+<header>
+  <h1>SantéPro Québec</h1>
+  <p>Plateforme numérique de santé</p>
+</header>
+
+<main>
+  <div class="card">
+    <h2>✅ Frontend actif</h2>
+    <p>Le backend est en ligne et fonctionnel.</p>
+    <p>API SantéPro Québec opérationnelle.</p>
+  </div>
+</main>
+
 </body>
 </html>
