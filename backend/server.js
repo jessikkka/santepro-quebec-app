@@ -1,33 +1,60 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import dotenv from "dotenv";
 
-import authRoutes from "./src/routes/auth.js";
-import patientRoutes from "./src/routes/patients.js";
+dotenv.config();
 
 const app = express();
 
-// Middlewares
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Route test
+// =======================
+// ROUTES
+// =======================
+
+// Route racine (évite "Not Found")
 app.get("/", (req, res) => {
-  res.json({ message: "SantéPro Québec API active ✅" });
+  res.json({
+    message: "SantéPro Québec API active ✅",
+    service: "backend",
+    status: "ok",
+    timestamp: new Date().toISOString()
+  });
 });
 
-// Routes API
-app.use("/api/auth", authRoutes);
-app.use("/api/patients", patientRoutes);
+// Health check
+app.get("/api/health", (req, res) => {
+  res.json({
+    service: "santepro-backend",
+    environment: process.env.NODE_ENV || "production",
+    status: "healthy"
+  });
+});
 
-// Connexion MongoDB
+// Exemple route patients (temporaire)
+app.get("/api/patients", (req, res) => {
+  res.json({
+    message: "Liste des patients (placeholder)",
+    patients: []
+  });
+});
+
+// =======================
+// DATABASE
+// =======================
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connecté"))
-  .catch((err) => console.error("Erreur MongoDB :", err));
+  .then(() => console.log("✅ MongoDB connecté"))
+  .catch((err) => console.error("❌ Erreur MongoDB:", err));
 
-// Lancement serveur
+// =======================
+// SERVER
+// =======================
 const PORT = process.env.PORT || 4000;
+
 app.listen(PORT, () => {
-  console.log(`Serveur lancé sur le port ${PORT}`);
+  console.log(`🚀 Serveur SantéPro Québec lancé sur le port ${PORT}`);
 });
