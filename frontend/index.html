@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>SantéPro Québec</title>
+</head>
+<body>
+  <h1>SantéPro Québec</h1>
+  <p>Frontend connecté au backend ✔️</p>
+
+  <script>
+    fetch("https://santepro-backend.onrender.com/")
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        document.body.insertAdjacentHTML(
+          "beforeend",
+          `<pre>${JSON.stringify(data, null, 2)}</pre>`
+        );
+      })
+      .catch(err => console.error(err));
+  </script>
+</body>
+</html>
