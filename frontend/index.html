@@ -1,48 +1,68 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SantéPro Québec</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      margin: 0;
-      text-align: center;
-    }
-    header {
-      background: #2c7be5;
-      color: white;
-      padding: 2rem;
-    }
-    main {
-      padding: 2rem;
-    }
+    body { font-family: Arial, sans-serif; margin: 0; background: #f5f7fb; }
+    header { background: #2f6fed; color: white; padding: 48px 16px; text-align: center; }
+    header h1 { margin: 0; font-size: 40px; }
+    header p { margin: 10px 0 0; font-size: 18px; opacity: 0.95; }
     .card {
-      background: white;
-      max-width: 500px;
-      margin: 2rem auto;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 520px; margin: 48px auto; background: white; padding: 28px;
+      border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.08); text-align: center;
     }
+    .status { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+    .muted { color: #555; }
+    .pill {
+      display: inline-block; padding: 10px 14px; border-radius: 999px;
+      background: #eef2ff; color: #1f2a44; margin-top: 12px; font-weight: 600;
+      word-break: break-all;
+    }
+    .error { color: #b00020; font-weight: 700; margin-top: 10px; }
   </style>
 </head>
 <body>
+  <header>
+    <h1>SantéPro Québec</h1>
+    <p>Plateforme numérique de santé</p>
+  </header>
 
-<header>
-  <h1>SantéPro Québec</h1>
-  <p>Plateforme numérique de santé</p>
-</header>
-
-<main>
   <div class="card">
-    <h2>✅ Frontend actif</h2>
-    <p>Le backend est en ligne et fonctionnel.</p>
-    <p>API SantéPro Québec opérationnelle.</p>
+    <div class="status" id="status">⏳ Connexion au backend…</div>
+    <div class="muted" id="details">Chargement…</div>
+    <div class="pill" id="apiUrl">API: (non définie)</div>
+    <div class="error" id="err"></div>
   </div>
-</main>
 
+  <script>
+    const BACKEND_URL = "https://santepro-backend.onrender.com";
+
+    const statusEl = document.getElementById("status");
+    const detailsEl = document.getElementById("details");
+    const apiUrlEl = document.getElementById("apiUrl");
+    const errEl = document.getElementById("err");
+
+    apiUrlEl.textContent = `API: ${BACKEND_URL}`;
+
+    async function pingBackend() {
+      errEl.textContent = "";
+      try {
+        const res = await fetch(`${BACKEND_URL}/`, { method: "GET" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        statusEl.textContent = "✅ Backend connecté";
+        detailsEl.textContent = data.message ? data.message : JSON.stringify(data);
+      } catch (e) {
+        statusEl.textContent = "⚠️ Impossible de joindre le backend";
+        detailsEl.textContent = "Si c’est une erreur CORS, on va l’activer côté backend.";
+        errEl.textContent = `Erreur: ${e.message}`;
+      }
+    }
+
+    pingBackend();
+  </script>
 </body>
 </html>
