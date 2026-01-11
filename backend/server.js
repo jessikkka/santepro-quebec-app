@@ -41,6 +41,7 @@ app.get("/api/patients", (req, res) => {
     patients: []
   });
 });
+// auth routes connected
 
 // =======================
 // DATABASE
