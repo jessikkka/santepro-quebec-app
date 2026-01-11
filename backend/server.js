@@ -69,7 +69,7 @@ mongoose
 // =======================
 // SERVER
 // =======================
-const PORT = process.env.PORT || 4000;
+
 
 app.listen(PORT, () => {
   console.log(`🚀 Serveur SantéPro Québec lancé sur le port ${PORT}`);
