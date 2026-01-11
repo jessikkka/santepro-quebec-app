@@ -10,6 +10,21 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+const PORT = process.env.PORT || 10000;
+const MONGODB_URI = process.env.MONGODB_URI;
+
+if (!MONGODB_URI) {
+  console.log("❌ MONGODB_URI est undefined (Render ne l'envoie pas au code)");
+}
+
+mongoose
+  .connect(MONGODB_URI)
+  .then(() => console.log("✅ MongoDB connecté"))
+  .catch((err) => console.log("❌ Erreur MongoDB:", err));
+
+app.listen(PORT, () => {
+  console.log(`🚀 Serveur SantéPro Québec lancé sur le port ${PORT}`);
+});
 
 // =======================
 // ROUTES
