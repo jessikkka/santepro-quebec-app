@@ -13,7 +13,23 @@ app.use(express.json());
 
 // ✅ PORT déclaré UNE SEULE FOIS
 const PORT = process.env.PORT || 10000;
+// --------------------
+// ROUTES API (public)
+// --------------------
 
+// Version / Info
+app.get("/api/info", (req, res) => {
+  res.json({
+    name: "SantePro Quebec API",
+    version: "0.1.0",
+    env: process.env.NODE_ENV || "development",
+  });
+});
+
+// Statut simple
+app.get("/api/status", (req, res) => {
+  res.json({ status: "ok", uptime: process.uptime() });
+});
 // routes
 app.get("/", (req, res) => {
   res.json({ status: "ok" });
