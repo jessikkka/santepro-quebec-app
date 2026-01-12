@@ -18,7 +18,13 @@ const PORT = process.env.PORT || 10000;
 app.get("/", (req, res) => {
   res.json({ status: "ok" });
 });
-
+app.get("/api/health", (req, res) => {
+  res.json({
+    service: "SantePro Quebec API",
+    status: "healthy",
+    timestamp: new Date().toISOString(),
+  });
+});
 // MongoDB
 mongoose
   .connect(process.env.MONGODB_URI)
